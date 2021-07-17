@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,13 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-     'users',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'users',
+     'projects',
 ]
 
 MIDDLEWARE = [
@@ -135,5 +138,18 @@ LOGOUT_REDIRECT_URL = "dashboard"
 
 EMAIL_HOST = "localhost"
 EMAIL_PORT = 1025
+
+
+#SMTP_hostname: smtp.mailgun.org
+#Port: 587 (recommended)
+#Username: postmaster@sandboxdb3fd0f23b184ef5851a6b59c88a98c9.mailgun.org
+#Default password: 4af23f7d7750a14fe34272b4cc93b9c6-6e0fd3a4-915f0a3b
+
+#EMAIL_HOST = "smtp.mailgun.org"
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+#EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+#EMAIL_USE_TLS = True
+
 
 
