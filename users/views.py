@@ -6,13 +6,16 @@ from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from .models import Project
+from .models import Project, Profile
 from django.shortcuts import get_object_or_404
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, ProfileSerializer
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
+from .permissions import IsAdminOrReadOnly
+
+
 # Create your views here.
 def dashboard(request):
 	return render(request, 'users/dashboard.html')
@@ -57,7 +60,7 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 class ProjectList(APIView):
-
+    permission_classes = [IsAdminOrReadOnly]
     def get_queryset(self):
         return Project.objects.all()
 
@@ -73,11 +76,14 @@ class ProjectList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class ProjectDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
+    permission_classes = [IsAdminOrReadOnly]
     def get_object(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -102,8 +108,14 @@ class ProjectDetail(APIView):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class ProfileList(generics.ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
+class UserDetail(generics.RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 
