@@ -8,18 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from .models import Project, Profile
 from django.shortcuts import get_object_or_404
-from .serializers import ProjectSerializer, ProfileSerializer
 from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, generics
-from .permissions import IsAdminOrReadOnly
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
 def dashboard(request):
 	return render(request, 'users/dashboard.html')
-
 
 
 def register(request):
@@ -59,70 +54,12 @@ def profile(request):
   
     return render(request, 'users/profile.html', context)
 
-class ProjectList(APIView):
-    permission_classes = [IsAdminOrReadOnly]
-    def get_queryset(self):
-        return Project.objects.all()
 
-    def get(self, request, format=None):
-        projects = Project.objects.all()
-        serializer = ProjectSerializer(projects, many=True)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        serializer = ProjectSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-class ProjectDetail(APIView):
-    """
-    Retrieve, update or delete a snippet instance.
-    """
-    permission_classes = [IsAdminOrReadOnly]
-    def get_object(self, pk):
-        try:
-            return Project.objects.get(pk=pk)
-        except Project.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        project = self.get_object(pk)
-        serializer = ProjectSerializer(project)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        project = self.get_object(pk)
-        serializer = ProjectSerializer(project, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class ProfileList(generics.ListAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-
-
-
-
-
-
-
-
-
+@login_required
+def view_profile(request, pk=None):
+    if pk:
+        user = User.objects.get(pk=pk)
+    else:
+        user = request.user
+    args = {'user': user}
+    return render(request, 'users/profile_list.html', args)

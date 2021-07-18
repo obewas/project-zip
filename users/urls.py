@@ -1,17 +1,15 @@
-from rest_framework.urlpatterns import format_suffix_patterns
-from .views import dashboard, register, profile, ProjectList, ProjectDetail, UserDetail, ProfileList
+
+from . import views
 from django.urls import path, include
 
 urlpatterns = [
-   path('', ProjectList.as_view(), name='home'),
+   path('',views.view_profile, name='home'),
    path("accounts/", include("django.contrib.auth.urls")),
-   path('dashboard/', dashboard, name='dashboard'),
-   path('register/', register, name="register"),
-   path('profile/', profile, name='profile'),
+   path('dashboard/', views.dashboard, name='dashboard'),
+   path('register/', views.register, name="register"),
+   path('profile/', views.profile, name='profile'),
 
-   path('projects/<int:pk>/', ProjectDetail.as_view(), name='project_detail'),
-   path('users/', ProfileList.as_view()),
-   path('users/<int:pk>/', UserDetail.as_view()),
-   
+
+
+
 ]
-urlpatterns = format_suffix_patterns(urlpatterns)
