@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
      'users',
      'projects',
+     'rest_framework',
     
 ]
 
@@ -153,4 +154,5 @@ EMAIL_PORT = 1025
 #EMAIL_USE_TLS = True
 
 
-
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

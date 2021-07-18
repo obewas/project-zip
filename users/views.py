@@ -5,6 +5,10 @@ from django.urls import reverse
 from users.forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views import generic
+from .models import Project
+from django.shortcuts import get_object_or_404
+
 # Create your views here.
 def dashboard(request):
 	return render(request, 'users/dashboard.html')
@@ -35,7 +39,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('/dashboard/')
+            return redirect('/home/')
   
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -47,3 +51,29 @@ def profile(request):
     }
   
     return render(request, 'users/profile.html', context)
+
+class ProjectListView(generic.ListView):
+    class Meta:
+        model = Project
+        
+
+    def get_queryset(self):
+        return Project.objects.all()
+
+class ProjectDetailView(generic.DetailView):
+    model = Project
+
+    def project_detail_view(request, pk):
+        project = get_object_or_404(Book, pk=pk)
+        return render(request, 'users/project_detail.html', context={'project': project})
+
+
+
+
+
+
+
+
+
+
+
