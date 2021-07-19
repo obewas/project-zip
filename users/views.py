@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreateProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 # Create your views here.
 from .models import Project
@@ -82,3 +82,23 @@ class ProjectCreateView(CreateView):
     template_name = 'project/create_project.html'
     fields = '__all__'
     success_url = reverse_lazy('/')
+
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = 'project/project-detail.html'
+    context_object_name = 'project'
+
+class ProjectUpdateView(UpdateView):
+
+    model = Project
+    template_name = 'project/project-update.html'
+    context_object_name = 'project'
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    template_name = 'project/project-delete.html'
+    success_url = reverse_lazy('project-list')

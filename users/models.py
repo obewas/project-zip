@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 # Create your models here.
 
@@ -20,6 +20,8 @@ class Profile(models.Model):
 
 
 class Project(models.Model):
+    min= 0
+    max=10
     title = models.CharField(max_length=200)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     screenshot1 = models.ImageField(upload_to='images')
@@ -28,12 +30,12 @@ class Project(models.Model):
     screenshot4 = models.ImageField(upload_to='images')
     description = models.TextField()
     link = models.CharField(max_length=100)
-    design = models.FloatField(blank=True, default=0)
-    usability = models.FloatField(blank=True, default=0)
-    creativity = models.FloatField(blank=True, default=0)
-    content = models.FloatField(blank=True, default=0)
-    overall_score = models.FloatField(blank=True, default=0)
-    posting_date = models.DateTimeField(auto_now_add=True)
+    design = models.FloatField(blank=True, default=0, validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    usability = models.FloatField(blank=True, default=0,validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    creativity = models.FloatField(blank=True, default=0,validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    content = models.FloatField(blank=True, default=0, validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    overall_score = models.FloatField(blank=True, default=0,validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    posting_date = models.DateTimeField(auto_now_add=True,validators=[MinValueValidator(min), MaxValueValidator(max)],)
 
     def __str__(self):
         return self.title
@@ -45,13 +47,15 @@ class Project(models.Model):
 
 
 class Grading(models.Model):
+    min = 0
+    max = 10
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    design = models.FloatField()
-    usability = models.FloatField()
-    creativity = models.FloatField()
-    content = models.FloatField()
-    mobile = models.FloatField()
+    design = models.FloatField(validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    usability = models.FloatField(validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    creativity = models.FloatField(validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    content = models.FloatField(validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    mobile = models.FloatField(validators=[MinValueValidator(min), MaxValueValidator(max)],)
 
     def __str__(self):
         return str(self.project)
@@ -60,3 +64,9 @@ class Grading(models.Model):
         average_grade = self.design + self.usability + self.creativity + self.content + self.mobile / 5
         return average_grade
 
+
+
+
+skype_session_attendance = models.FloatField(
+    validators=[MinValueValidator(min), MaxValueValidator(max)],
+)

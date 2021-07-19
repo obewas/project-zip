@@ -1,0 +1,17 @@
+{% extends "__base.html" %}
+{% block container %}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Project Details #{{project.title}}</h5>
+    </div>
+    <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">Project Name</dt>
+      <dd class="col-sm-9">{{ project.bio }}</dd>
+      <dt class="col-sm-3">Location</dt>
+      <dd class="col-sm-9">{{ project.location }}</dd>
+    </dl>
+
+    </div>
+</div>
