@@ -132,12 +132,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'hs8k1napd',
-    'API_KEY': '711616426271462',
-    'API_SECRET': 'jSwVe26AvQnapdwGEBcFABvfxYA'
-}
 
+cloudinary.config(
+    cloud_name = 'hs8k1napd',
+    api_key = '711616426271462',
+    api_secret = 'jSwVe26AvQnapdwGEBcFABvfxYA',
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

@@ -3,6 +3,11 @@
 {{project.title}}
 
 <style>
+@media screen and (max-width: 500px) {
+  .column {
+    width: 100%;
+  }
+}
     .circle-wrap {
   margin: 50px auto;
   width: 150px;
@@ -55,7 +60,7 @@
 /* Three image containers (use 25% for four, and 50% for two, etc) */
 .column {
   float: left;
-  width: 33.33%;
+  width: 25%;
   padding: 5px;
 }
 
@@ -70,21 +75,21 @@
 <div class="container">
         {% for project in projects %}
          <div class="title">
-             <h5>{{project.title}}</h5><i>{{project.posting_date}}</i>
+             <h5>Project Name: {{project.title}}</h5><i>Posted: {{project.posting_date}}</i>
          </div>
 
         <div class="row">
             <div class="column">
-                <img src="{{project.screenshot1}}" alt="Snow" style="width:100%">
+                <img src="{{project.screenshot1.url}}" alt="Snow" style="width:100%">
             </div>
             <div class="column">
-                <img src="{{project.screenshot1}}" alt="Forest" style="width:100%">
+                <img src="{{project.screenshot2.url}}" alt="Forest" style="width:100%">
             </div>
              <div class="column">
-                 <img src="{{project.screenshot1}}" alt="Mountains" style="width:100%">
+                 <img src="{{project.screenshot3.url}}" alt="Mountains" style="width:100%">
              </div>
             <div class="column">
-                <img src="{{project.screenshot1}}" alt="Mountains" style="width:100%">
+                <img src="{{project.screenshot4.url}}" alt="Mountains" style="width:100%">
             </div>
         </div>
     <div class="container">
@@ -179,9 +184,11 @@
                         </div>
                 </div>
        </div>
-
+        </div>
+    </div>
 
 
     {% endfor %}
 </div>
+
 {% endblock %}
