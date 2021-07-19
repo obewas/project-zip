@@ -1,7 +1,7 @@
 
 
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
   <h2>Log in to Project Review Site</h2>
   {% if form.errors %}
@@ -13,7 +13,7 @@
     {% for field in form %}
       <p>
         {{ field.label_tag }}<br>
-        {{ field }}<br>
+        {{ field | as_crispy_field }}<br>
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
