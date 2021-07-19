@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from decouple import config,Csv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,6 +45,8 @@ INSTALLED_APPS = [
      'users',
      'bootstrap4',
     'crispy_forms',
+    'cloudinary',
+    'cloudinary_storage',
      
     
 ]
@@ -127,6 +132,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hs8k1napd',
+    'API_KEY': '711616426271462',
+    'API_SECRET': 'jSwVe26AvQnapdwGEBcFABvfxYA'
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -139,7 +150,7 @@ STATICFILES_DIRS = os.path.join(BASE_DIR, 'staticfiles'),
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 LOGIN_REDIRECT_URL = "dashboard"

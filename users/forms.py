@@ -2,7 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile, Project
-
+from django.forms import ModelForm
+from .models import Photo
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -30,3 +31,9 @@ class CreateProjectForm(forms.ModelForm):
         model = Project
         fields = '__all__'
 
+
+
+class PhotoForm(ModelForm):
+  class Meta:
+      model = Photo
+      fields = ['name', 'image']

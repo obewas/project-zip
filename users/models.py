@@ -2,15 +2,22 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.db import models
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
+class Photo(models.Model):
+    image = CloudinaryField('image')
+    name = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.name
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
-    picture = models.ImageField(upload_to='images', null=True)
+    picture = models.ForeignKey(Photo, on_delete=models.CASCADE, null=True)
     created = models.DateTimeField(auto_now_add=True)
     contact = models.CharField(max_length=250, null=True)
     profession = models.CharField(max_length=250, null=True)

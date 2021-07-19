@@ -10,7 +10,12 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 # Create your views here.
 from .models import Project
+from django import forms
+from django.http import HttpResponse
 
+from cloudinary.forms import cl_init_js_callbacks
+from .models import Photo
+from .forms import PhotoForm
 
 def dashboard(request):
 	return render(request, 'users/dashboard.html')
@@ -102,3 +107,17 @@ class ProjectDeleteView(DeleteView):
     model = Project
     template_name = 'project/project-delete.html'
     success_url = reverse_lazy('project-list')
+
+
+
+
+def upload(request):
+  context = dict( backend_form = PhotoForm())
+
+  if request.method == 'POST':
+    form = PhotoForm(request.POST, request.FILES)
+    context['posted'] = form.instance
+    if form.is_valid():
+        form.save()
+
+  return render(request, 'project/upload.html', context)
