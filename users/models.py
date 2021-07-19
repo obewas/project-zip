@@ -22,6 +22,7 @@ class Profile(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    screenshot1 = models.ImageField(upload_to='images')
     screenshot2 = models.ImageField(upload_to='images')
     screenshot3 = models.ImageField(upload_to='images')
     screenshot4 = models.ImageField(upload_to='images')

@@ -1,11 +1,12 @@
 
-from django.shortcuts import redirect, render, HttpResponseRedirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
+
 from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreateProjectForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views import View
-
+from django.views.generic import ListView, DetailView, CreateView
 
 # Create your views here.
 from .models import Project
@@ -39,7 +40,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('/home/')
+            return redirect('/')
   
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -63,21 +64,21 @@ def view_profile(request, pk=None):
     return render(request, 'users/profile_list.html', args)
 
 #creating project views
-class CreateProjectView(View):
-    form = CreateProjectForm()
-    template_name = 'new_project.html'
+class ProjectListView(ListView):
+    model = Project
+    template_name = 'project/project_list.html'
+    context_object_name = 'projects'
 
-    def get_project(self, request, *args, **kwargs):
-        project = Project.objects.all()
-        context = {
-            'project':project
-        }
-        return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
-        form = CreateProjectForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/success/')
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        projects = self.get_queryset()
 
-        return render(request, 'new_project.html', {'form': form})
+        context['projects'] = projects
+        return context
+
+class ProjectCreateView(CreateView):
+    model = Project
+    template_name = 'project/create_project.html'
+    fields = '__all__'
+    success_url = reverse_lazy('/')

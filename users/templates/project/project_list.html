@@ -1,0 +1,22 @@
+
+{% block content %}
+
+<table class="table">
+    <tr>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{project.name}}</td>
+                <td>{{project.description}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+
+{% endblock %}
