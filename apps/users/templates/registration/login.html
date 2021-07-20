@@ -1,34 +1,23 @@
 
 
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <h2>Log in to Project Review Site</h2>
-  {% if form.errors %}
-    <p style="color: red">Your username and password didn't match. Please try again.</p>
-  {% endif %}
-  <form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}" />
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}<br>
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-        {% if field.help_text %}
-          <p><small style="color: grey">{{ field.help_text }}</small></p>
-        {% endif %}
-      </p>
-    {% endfor %}
-    <button type="submit" class="btn btn-primary">Log in</button>
-    <a href="{% url 'register' %}">New to the Site? Register</a>
-    <a href="{% url 'home' %}">Back to dashboard</a>
-<a href="{% url 'password_reset' %}">Reset password</a>
-  </form>
-
   
+     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  
+    <div class="form-box">
+      <div class="header-text">
+        Login Form
+      </div><input placeholder="Your Username" type="text"><input placeholder="Your Password" type="password"> <input id="terms" type="checkbox"> <label for="terms"></label><span>Agree with <a href="#">Terms & Conditions</a></span> <button>login</button>
+    </div>
+    <div class="body-text">
+      <a href="{% url 'register' %}">New to the Site? Register</a>
+      <a href="{% url 'home' %}">Back to dashboard</a>
+      <a href="{% url 'password_reset' %}">Reset password</a>
+    </div>
+ 
   
 {% endblock %}
 
