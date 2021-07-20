@@ -120,4 +120,5 @@ def upload(request):
     if form.is_valid():
         form.save()
 
+        return redirect('/profile/')
   return render(request, 'project/upload.html', context)
