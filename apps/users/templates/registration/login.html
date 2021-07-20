@@ -13,7 +13,7 @@
     {% for field in form %}
       <p>
         {{ field.label_tag }}<br>
-        {{ field | as_crispy_field }}<br>
+        {{ field }}<br>
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
@@ -27,5 +27,8 @@
     <a href="{% url 'home' %}">Back to dashboard</a>
 <a href="{% url 'password_reset' %}">Reset password</a>
   </form>
+
+  
+  
 {% endblock %}
 

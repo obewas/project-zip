@@ -8,7 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
-    <script type="text/javascript" src="{% static 'sidebar.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
 	<title>PeerVoters</title>
 </head>
 <body>
@@ -17,10 +18,10 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Project Review app</h3>
+                <h5>Project Review app</h3>
             </div>
 
-            <ul class="list-unstyled components">
+            <ul class="list-unstyled components" style="color: aliceblue;">
                 {% if user.is_authenticated %}
                 <p><a href="{% url 'logout'%}">Logout</a></p>
                 {% endif %}
@@ -71,12 +72,15 @@
                     <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
                 </li>
             </ul>
+            
         </nav>
+        
         <div id="content">
 
-            
-        {% block content %}
 
+        
+        {% block content %}
+       
         <!-- Page Content  -->
         
         
