@@ -1,1 +1,1 @@
-web: gunicorn peervotes.wsgi
+web: python manage.py collectstatic --no-input; gunicorn peervotes.wsgi
