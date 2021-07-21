@@ -41,21 +41,42 @@
 </div>
 </div>
 <hr>
-
 <div class="container">
 	<div class="row">
-		<div class="column">
-			<form method="post">
-				{% csrf_token %}
-				 {{form.as_p}}
-				<input type="submit" name="grading" value="Grade">
+		<div class="col">
+		   <div class="card-group">
+		   	<form method="post">
+		     {% csrf_token %}
+		   	<div class="card">
+		   		  {{form.design.label}}
+		   			{{form.design}}
+		   		
+		   	</div>
+		   		<div class="card">
+		   			{{form.creativity.label}}
+		   			{{form.creativity}}
+		   		
+		   	</div>
+		   		<div class="card">
+		   			{{form.usability.label}}
+		   			{{form.usability}}
+		   		
+		   	</div>
+		   		<div class="card">
+		   			{{form.content.label}}
+		   			{{form.content}}
+		   		
+		   	</div>
+		   	<input type="submit" name="grading" value="Submit">
 			</form>
-
-       </div>
-		
+		   	</div>	
 	</div>
+
+</div>
 	
 </div>
+
+
 <hr>
 <div class="container">
 	<div class="row">
