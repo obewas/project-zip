@@ -16,7 +16,7 @@
     {% csrf_token %}
   <div class="container">
     <h5>Log In</h5>
-    <p>Please to access your account.</p>
+    <p>Please login to access your account.</p>
     <hr>
     <div>
         <label for="username" style="font-size: small;"><b>Username</b></label>
@@ -31,9 +31,9 @@
    
     <button type="submit" class="loginbtn">Login</button>
   </div>
-
-  <div class="container register">
-    <p>Don't have an account? <a href="{% url 'register' %}">Register</a>.</p>
+  <div class="container changepassword">
+    <p>Forgotten password? <a href="{% url 'password_change' %}">Change Password</a>.</p>
+     <p>Don't have an account? <a href="{% url 'register' %}">Register</a>.</p>
   </div>
 </form>
 </div>
