@@ -10,7 +10,6 @@ urlpatterns = [
    path('profile/', views.profile, name='profile'),
    path('upload/', views.upload, name='upload'),
 
-
    path('project', views.ProjectListView.as_view(), name='project-list'),
    path('project/create', views.ProjectCreateView.as_view(), name='project-create'),
    path('project/<int:pk>', views.ProjectDetailView.as_view(), name='project-detail'),
