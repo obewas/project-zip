@@ -191,7 +191,7 @@ def project_grading(request,id):
         grade.score = round(score, 2)
     
         grade.save()
-        return redirect("projects", id=project.id)
+        return redirect("project-list")
     else:
         form = GradeForm()
               
