@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Project
+from .models import Profile, Project, Grading
 from django.forms import ModelForm
 from .models import Photo
 
@@ -37,3 +37,8 @@ class PhotoForm(ModelForm):
   class Meta:
       model = Photo
       fields = ['name', 'image']
+
+class GradeForm(forms.ModelForm):
+    class Meta:
+        model = Grading
+        fields=['design','content','usability','creativity']

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-{{project.title}}
+{% load static %}
+
+
 
 <style>
 @media screen and (max-width: 500px) {
@@ -91,6 +93,10 @@
             <div class="column">
                 <img src="{{project.screenshot4.url}}" alt="Mountains" style="width:100%">
             </div>
+        </div>
+        <div>
+            <a href="{% url 'grades' project.id %}">Grade the project</a>
+             {{project.pk}}
         </div>
     <div class="container">
         <div class="row">

@@ -3,19 +3,18 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
-from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreateProjectForm
+from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreateProjectForm, PhotoForm, GradeForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
-# Create your views here.
-from .models import Project
+from .models import Project, Photo, Grading
 from django import forms
 from django.http import HttpResponse
 
 from cloudinary.forms import cl_init_js_callbacks
-from .models import Photo
-from .forms import PhotoForm
+
+# Create your views here.
+
 
 def dashboard(request):
 	return render(request, 'users/dashboard.html')
@@ -112,8 +111,6 @@ class ProjectDeleteView(DeleteView):
     success_url = reverse_lazy('project-list')
 
 
-
-
 def upload(request):
   context = dict( backend_form = PhotoForm())
 
@@ -129,7 +126,6 @@ def upload(request):
 from .models import *
 
 
-
 class SearchResultsView(ListView):
     model = Project
     template_name = 'project/project-search.html'
@@ -141,7 +137,71 @@ class SearchResultsView(ListView):
         )
         return object_list
 
-
+@login_required(login_url='/accounts/login/')
+def project_grading(request,id):
+    user = Profile.objects.get(user= request.user)
+    project = Project.objects.get(id=id)
+    
+    grades=Grading.objects.filter(project = project).last()
+    #tech_tags = project.technologies.split(",")
+ 
+    try:
+        grades = Grading.objects.filter(user=user,project=project).first()
+    except Grading.DoesNotExist:
+        grades=None
+        
+    if grades is None:
+        grades_status=False
+    else:
+        grades_status = True
+   
+    form = GradeForm()
+    grading=None
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            grade = form.save(commit=False)
+            grade.user = user
+            grade.project = project
+            grade.save()
+        try:
+            grading = Grading.objects.filter(project_id=id)
+        except Grading.DoesNotExist:
+            grading=None
+        design = form.cleaned_data['design']
+        usability = form.cleaned_data['usability']
+        content = form.cleaned_data['content']
+        creativity = form.cleaned_data['creativity']
+        grade.average = (design + usability + content + creativity)/4
+        grade.save()
+        
+        design_gradings = [d.design for d in grading]
+        design_average = sum(design_gradings) / len(design_gradings)
+        usability_gradings = [us.usability for us in grading]
+        usability_average = sum(usability_gradings) / len(usability_gradings)
+        content_gradings = [content.content for content in grading]
+        content_average = sum(content_gradings) / len(content_gradings)
+        creativity_gradings = [cr.creativity for cr in grading]
+        creativity_average = sum(creativity_gradings) / len(creativity_gradings)
+        score = (design_average + usability_average + content_average + creativity_average) / 4
+        grade.design_average = round(design_average, 2)
+        grade.usability_average = round(usability_average, 2)
+        grade.content_average = round(content_average, 2)
+        grade.creativity_average = round(creativity_average, 2)
+        grade.score = round(score, 2)
+    
+        grade.save()
+        return redirect("projects", id=project.id)
+    else:
+        form = GradeForm()
+              
+    context={
+        "project":project,
+        "grading":grading,
+        "form":form,
+        "grades_status":grades_status 
+    }
+    return render(request,"project/grading.html",context)
 
 
 

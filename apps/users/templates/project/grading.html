@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+
+
+{{project.title}}
+
+<style>
+	
+	img {
+		float: left;
+		width: 25%;
+		height: 15rem;
+		
+	}
+</style>
+<div class="container">
+	<div class="row">
+			<div class="column">
+					<div class="card-group">
+  			<div class="card">
+    <img class="card-img-top" src="{{project.screenshot1.url}}" alt="Card image cap">
+      
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="{{project.screenshot2.url}}" alt="Card image cap">
+    
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="{{project.screenshot3.url}}" alt="Card image cap">
+    
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="{{project.screenshot2.url}}" alt="Card image cap">
+    
+  </div>
+</div>
+	
+</div>
+</div>
+<hr>
+
+<div class="container">
+	<div class="row">
+		<div class="column">
+			<form method="post">
+				{% csrf_token %}
+				 {{form.as_p}}
+				
+			</form>
+
+       </div>
+		
+	</div>
+	
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="column">
+			<div class="card">
+				<h5 class="card-text">{{}}</h5>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	
+
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}
