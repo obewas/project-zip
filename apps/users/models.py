@@ -72,8 +72,18 @@ class Grading(models.Model):
         return average_grade
 
 
+class Average(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    total = models.ForeignKey(Grading, on_delete=models.CASCADE)
 
 
-skype_session_attendance = models.FloatField(
-    validators=[MinValueValidator(min), MaxValueValidator(max)],
-)
+    def average_grade(self):
+
+        avg = total / profile.length
+        return avg
+
+
+
+
+
+

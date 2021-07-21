@@ -1,0 +1,25 @@
+
+{% extends 'base.html'%}
+
+
+{% block content %}
+<form action="{% url 'search' %}" method="POST">
+    {% csrf_token %} 
+    <input type="text" name="name" placeholder="search project by title">
+    <input type="submit" name="submit" value="Search">
+</form>
+
+
+{% if result %}
+{% for result in results %}
+
+    <p>{{result.name}}</p>
+
+{% endfor %}
+{% else %}
+<p>There is no project with that title</p>
+{% endif %}
+
+<a href="{% url 'project-list' %}"><button type="submit" class="btn btn-danger">Close</button></a>
+{% endblock %}
+

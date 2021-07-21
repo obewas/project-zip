@@ -27,6 +27,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
             messages.success(request, f'Your account has been created! You are now able to log in')
             return redirect('profile')
     else:
@@ -93,6 +94,8 @@ class ProjectDetailView(DetailView):
     template_name = 'project/project-detail.html'
     context_object_name = 'project'
 
+
+
 class ProjectUpdateView(UpdateView):
 
     model = Project
@@ -122,3 +125,24 @@ def upload(request):
 
         return redirect('/profile/')
   return render(request, 'project/upload.html', context)
+
+from .models import *
+
+
+
+class SearchResultsView(ListView):
+    model = Project
+    template_name = 'project/project-search.html'
+
+    def get_queryset(self): # new
+        query = self.request.GET.get('q')
+        object_list = Project.objects.filter(
+            Q(title__icontains=query)
+        )
+        return object_list
+
+
+
+
+
+

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
-
+<!--
 <div class="container">
   <h2>Log in to Project Review Site</h2>
   {% if form.errors %}
@@ -28,6 +29,41 @@
     <a href="{% url 'password_reset' %}">Reset password</a>
   </form>
 
+</div>
+-->
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/register.css'%}">
+</head>
+
+<h2>Log in to Project Review Site</h2>
+  {% if form.errors %}
+    <p style="color: red">Your username and password didn't match. Please try again.</p>
+  {% endif %}
+<div class="form-group">
+<form action="/accounts/login/" method="POST">
+    {% csrf_token %}
+  <div class="container">
+    <h5>Log In</h5>
+    <p>Please to access your account.</p>
+    <hr>
+    <div>
+        <label for="username" style="font-size: small;"><b>Username</b></label>
+        {{form.username}}
+
+    </div>
+    <div>
+         <label for="psw"><b>Password</b></label>
+    {{form.password}}
+        
+    </div>
+   
+    <button type="submit" class="loginbtn">Login</button>
+  </div>
+
+  <div class="container register">
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a>.</p>
+  </div>
+</form>
 </div>
   
 {% endblock %}
