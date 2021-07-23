@@ -4,10 +4,18 @@
 {% block content %}
 
 
+<form method="post" action="">
+
+    {% csrf_token %}
+
+    {{ u_form.as_p }}
+    {{ p_form.as_p }}
+    <input type="submit" name="update">
+    
+</form>
 
 
-
-<div class="container rounded bg-white mt-5 mb-5">
+<!-- <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">Profile<span class="font-weight-bold">{{user}}</span><span class="text-black-50"></span><span> </span></div>
@@ -20,7 +28,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
-                <form class="" method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row mt-2">
                     <div class="col-md-6"><label class="labels">{{u_form.username.label}}</label>{{u_form.username}}</div>
@@ -36,13 +44,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Update</button>
+                    <input type="submit" value="update" name="submit">
         
                 </div>
             </form>
  </div>
  </div>
  </div>
-</div>
+</div> -->
 
 {% endblock %}

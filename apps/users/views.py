@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
-from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreateProjectForm, PhotoForm, GradeForm
+from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreateProjectForm, PhotoForm, GradeForm, Photo2Form, Photo3Form
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -82,16 +82,31 @@ class ProjectListView(ListView):
         context['projects'] = projects
         return context
 
-class ProjectCreateView(CreateView):
-    model = Project
-    template_name = 'project/create_project.html'
-    fields = '__all__'
-    success_url = reverse_lazy('/')
+# class ProjectCreateView(CreateView):
+#     model = Project
+#     template_name = 'project/create_project.html'
+#     fields = '__all__'
+#     success_url = reverse_lazy('project-list')
+    
+
+def create_project(request):
+    
+    context ={}
+    form = CreateProjectForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('/project')
+         
+    context['form']= form
+    return render(request, "project/create_project.html", context)
+
 
 class ProjectDetailView(DetailView):
     model = Project
     template_name = 'project/project-detail.html'
     context_object_name = 'project'
+
+
 
 
 
@@ -105,25 +120,52 @@ class ProjectUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
-class ProjectDeleteView(DeleteView):
-    model = Project
-    template_name = 'project/project-delete.html'
-    success_url = reverse_lazy('project-list')
+# class ProjectDeleteView(DeleteView):
+#     model = Project
+#     template_name = 'project/project-delete.html'
+#     success_url = reverse_lazy('project')
+
+def delete_project(request, pk):
+    project = Project.objects.get(pk=pk).delete()
+    return redirect('/project')
+
 
 
 def upload(request):
-  context = dict( backend_form = PhotoForm())
+    context = dict( backend_form = PhotoForm())
+    if request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES)
+        context['posted'] = form.instance
+        if form.is_valid():
+            form.save()
 
-  if request.method == 'POST':
-    form = PhotoForm(request.POST, request.FILES)
-    context['posted'] = form.instance
-    if form.is_valid():
-        form.save()
+            return redirect('/profile/')
+    return render(request, 'project/upload.html', context)
 
-        return redirect('/profile/')
-  return render(request, 'project/upload.html', context)
+def upload_two(request):
+    context = dict( backend_form = Photo2Form())
 
-from .models import *
+    if request.method == 'POST':
+        form = Photo2Form(request.POST, request.FILES)
+        context['posted'] = form.instance
+        if form.is_valid():
+            form.save()
+            return redirect('/create/')
+
+    return render(request, 'project/upload2.html', context)
+
+def upload_three(request):
+    context = dict( backend_form = Photo3Form())
+
+    if request.method == 'POST':
+        form = Photo3Form(request.POST, request.FILES)
+        context['posted'] = form.instance
+        if form.is_valid():
+            form.save()
+
+            return redirect('/create/')
+    return render(request, 'project/upload3.html', context)
+
 
 
 class SearchResultsView(ListView):

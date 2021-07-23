@@ -12,6 +12,18 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.name
+class Photo2(models.Model):
+    image = CloudinaryField('image')
+    name = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.name
+class Photo3(models.Model):
+    image = CloudinaryField('image')
+    name = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.name
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -29,20 +41,13 @@ class Profile(models.Model):
 class Project(models.Model):
     min= 0
     max=10
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, null=True)
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
-    screenshot1 = CloudinaryField('image')
-    screenshot2 = CloudinaryField('image')
-    screenshot3 = CloudinaryField('image')
-    screenshot4 = CloudinaryField('image')
+    screenshot1 = models.ForeignKey(Photo2, on_delete=models.CASCADE, null=True)
+    screenshot2 = models.ForeignKey(Photo3, on_delete=models.CASCADE, null=True)
     description = models.TextField()
     link = models.CharField(max_length=100)
-    design = models.FloatField(blank=True, default=0, validators=[MinValueValidator(min), MaxValueValidator(max)],)
-    usability = models.FloatField(blank=True, default=0,validators=[MinValueValidator(min), MaxValueValidator(max)],)
-    creativity = models.FloatField(blank=True, default=0,validators=[MinValueValidator(min), MaxValueValidator(max)],)
-    content = models.FloatField(blank=True, default=0, validators=[MinValueValidator(min), MaxValueValidator(max)],)
-    overall_score = models.FloatField(blank=True, default=0,validators=[MinValueValidator(min), MaxValueValidator(max)],)
-    posting_date = models.DateTimeField(auto_now_add=True,validators=[MinValueValidator(min), MaxValueValidator(max)],)
+    posting_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
