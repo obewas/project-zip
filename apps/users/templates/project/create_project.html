@@ -7,13 +7,13 @@
 
 
 {% block container %}
-<div class="card">
+<!-- <div class="card">
     <div class="card-header">
         <h5 class="card-title">Create a New Project</h5>
     </div>
     <div>
-        <a href="{% url 'upload_two'%}">Upload Screenshot 1</a>
-        <a href="{% url 'upload_three'%}">Upload Screenshot 2</a>
+        <a href="{% url 'upload' %}">Upload Screenshot 1</a>
+        
        
     </div>
     
@@ -24,7 +24,12 @@
             <input type="submit" name="submit" value="Create">
         </form>
     </div>
-</div>
+</div> -->
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
 {% endblock %}
 
 {% endblock %}

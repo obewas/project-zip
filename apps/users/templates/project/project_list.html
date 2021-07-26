@@ -97,10 +97,8 @@ img {
         <div class="row">
            
                 <div class="card-group">
-                    <img src="{{project.screenshot1.url}}" alt="Snow">
-                    <img src="{{project.screenshot2.url}}" alt="Forest">
-                    <img src="{{project.screenshot3.url}}" alt="Mountains">
-                    <img src="{{project.screenshot4.url}}" alt="Mountains">
+                    <img src="{{project.screenshot.url}}" alt="Snow">
+                   
                 </div>
 
            
@@ -114,6 +112,10 @@ img {
         </div>
          <div>
             <a href="{% url 'project-delete' project.id %}"><button class="btn btn-danger">Delete</button></a>
+             
+        </div>
+         <div>
+            <a href="{% url 'project-update' project.id %}"><button class="btn btn-danger">Update</button></a>
              
         </div>
         <hr>

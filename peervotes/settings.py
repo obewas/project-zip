@@ -159,16 +159,22 @@ cloudinary.config(
     api_secret = 'jSwVe26AvQnapdwGEBcFABvfxYA',
 )
 
+CLOUDINARY_STORAGE = {
+'CLOUD_NAME':'hs8k1napd',
+'API_SECRET':'jSwVe26AvQnapdwGEBcFABvfxYA',
+'API_KEY':'711616426271462',
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'staticfiles'),
 
 MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

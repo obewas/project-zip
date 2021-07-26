@@ -25,10 +25,11 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'home' %}">Profile</a></li>
                 <li><a href="{% url 'upload'%}">Upload Photo</a></li>
+                <li><a href="{% url 'create' %}">Create Project</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-user"></span>Hello {{ user }} !!</a></li>
-                <li><img src="#" width="50" height="50"></li>
+                <!-- <li><img src="#" width="50" height="50"></li> -->
                 <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>

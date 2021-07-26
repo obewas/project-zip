@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Profile, Project, Grading
 from django.forms import ModelForm
-from .models import Photo, Photo2, Photo3
+from .models import Photo
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -38,14 +38,7 @@ class PhotoForm(ModelForm):
       model = Photo
       fields = ['name', 'image']
 
-class Photo2Form(ModelForm):
-  class Meta:
-      model = Photo2
-      fields = ['name', 'image']
-class Photo3Form(ModelForm):
-  class Meta:
-      model = Photo3
-      fields = ['name', 'image']
+
 
 class GradeForm(forms.ModelForm):
     class Meta:

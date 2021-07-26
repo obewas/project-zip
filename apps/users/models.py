@@ -12,18 +12,7 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.name
-class Photo2(models.Model):
-    image = CloudinaryField('image')
-    name = models.CharField(max_length=200, null=True)
 
-    def __str__(self):
-        return self.name
-class Photo3(models.Model):
-    image = CloudinaryField('image')
-    name = models.CharField(max_length=200, null=True)
-
-    def __str__(self):
-        return self.name
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -42,15 +31,17 @@ class Project(models.Model):
     min= 0
     max=10
     title = models.CharField(max_length=200, null=True)
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
-    screenshot1 = models.ForeignKey(Photo2, on_delete=models.CASCADE, null=True)
-    screenshot2 = models.ForeignKey(Photo3, on_delete=models.CASCADE, null=True)
+    # owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    screenshot1 = models.ImageField(upload_to='projects', null=True)
     description = models.TextField()
-    link = models.CharField(max_length=100)
+    link = models.CharField(max_length=200, null=True)
     posting_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('project-list', kwargs={'pk': self.pk})
 
     @classmethod
     def search_project(cls, search_term):
