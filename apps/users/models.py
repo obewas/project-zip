@@ -31,9 +31,10 @@ class Project(models.Model):
     min= 0
     max=10
     title = models.CharField(max_length=200, null=True)
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     screenshot1 = models.ImageField(upload_to='projects', null=True)
     screenshot2 = models.ImageField(upload_to='projects', null=True)
+    screenshot3 = models.ImageField(upload_to='projects', null=True)
     description = models.TextField()
     link = models.CharField(max_length=200, null=True)
     posting_date = models.DateTimeField(auto_now_add=True)
