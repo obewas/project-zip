@@ -7,7 +7,7 @@ from .forms import UserUpdateForm, UserRegisterForm, ProfileUpdateForm, CreatePr
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Project, Photo, Grading
+from .models import Project, Photo, Grading, Profile
 from django import forms
 from django.http import HttpResponse
 
@@ -81,11 +81,6 @@ class ProjectListView(ListView):
 
         context['projects'] = projects
         return context
-
-# class ProjectCreateView(CreateView):
-#     model = Project
-#     template_name = 'project/create_project.html'
-#     fields = '__all__'
   
     
 def create_project(request):
@@ -98,17 +93,6 @@ def create_project(request):
         form = CreateProjectForm()
     return render(request, 'project/create_project.html', {'form': form})
 
-
-# def create_project(request):
-    
-#     context ={}
-#     form = CreateProjectForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         return redirect('/project')
-         
-#     context['form']= form
-#     return render(request, "project/create_project.html", context)
 
 
 class ProjectDetailView(DetailView):
@@ -130,10 +114,7 @@ class ProjectUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('project-detail', kwargs={'pk': self.object.id})
 
-# class ProjectDeleteView(DeleteView):
-#     model = Project
-#     template_name = 'project/project-delete.html'
-#     success_url = reverse_lazy('project')
+
 
 def delete_project(request, pk):
     project = Project.objects.get(pk=pk).delete()
@@ -163,6 +144,13 @@ class SearchResultsView(ListView):
             Q(title__icontains=query)
         )
         return object_list
+
+class GradingCreateView(CreateView):
+    model = Grading
+    template_name = 'grading/create-grades.html'
+    context_object_name = 'grades'
+    fields = '__all__'
+
 
 @login_required(login_url='/accounts/login/')
 def project_grading(request,id):
@@ -228,7 +216,7 @@ def project_grading(request,id):
         "form":form,
         "grades_status":grades_status 
     }
-    return render(request,"project/grading.html",context)
+    return render(request,"project/rating.html",context)
 
 
 

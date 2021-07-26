@@ -14,8 +14,11 @@ urlpatterns = [
    path('create', views.create_project, name='create'),
    path('project/<int:pk>', views.ProjectDetailView.as_view(), name='project-detail'),
    path('project/<int:pk>/update', views.ProjectUpdateView.as_view(), name='project-update'),
-   path('project/<int:pk>/', views.delete_project, name='project-delete'),
+   path('project/<int:pk>/delete', views.delete_project, name='project-delete'),
    path('project/search/', views.SearchResultsView.as_view(), name='search'),
-   path('<int:id>/grade', views.project_grading, name='grades'),
+   path('grade/<int:id>/', views.project_grading, name='grades'),
+
+   path('create_grade', views.GradingCreateView.as_view(), name='create-grade'),
+
 
 ]

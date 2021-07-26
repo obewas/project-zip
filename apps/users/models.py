@@ -77,16 +77,18 @@ class Grading(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, related_name='rater')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='ratings', null=True)
     graded_at=models.DateTimeField(auto_now_add=True, null=True)
-    def save_rating(self):
+    
+    def save_grading(self):
         self.save()
-    def delete_rating(self):
+    def delete_grading(self):
         self.delete()
     @classmethod
-    def get_project_rating(cls, pk):
-        rating = Rating.objects.filter(project_id=pk).all()
-        return rating
+    def get_project_grading(cls, pk):
+        grading = Grading.objects.filter(project_id=pk).all()
+        return grading
+
     def __str__(self):
-        return f'{self.project} Rating'
+        return f'{self.project} Grading'
 
 
 
