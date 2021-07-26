@@ -3,10 +3,10 @@
 
 {% block content %}
 
-
+<a href="{% url 'upload' %}">Upload your photo</a>
 <form method="post" action="">
 
-    {% csrf_token %}
+    {% csrf_token %}å
 
     {{ u_form.as_p }}
     {{ p_form.as_p }}
