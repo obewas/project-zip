@@ -1,18 +1,19 @@
 
 {% extends 'base.html' %}
-
+{% load bootstrap4 %}
 {% block content %}
-
-<a href="{% url 'upload' %}">Upload your photo</a>
+<div class="container" style="padding-left: 15%; padding-right: 15%;">
+<a href="{% url 'upload' %}" style="color: blue;" class="btn btn-outline-success">Upload your profile photo here</a>
 <form method="post" action="">
 
-    {% csrf_token %}å
+    {% csrf_token %}
 
-    {{ u_form.as_p }}
-    {{ p_form.as_p }}
+    {% bootstrap_form u_form %}
+    {% bootstrap_form p_form %}
     <input type="submit" name="update">
     
 </form>
+</div>
 
 
 <!-- <div class="container rounded bg-white mt-5 mb-5">
