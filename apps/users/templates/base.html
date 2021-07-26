@@ -1,88 +1,60 @@
-{% load bootstrap4 %}
-
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
-    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
-	<title>PeerVoters</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% block head %}
+    <title>Base</title>
+    
+    {% endblock %}
 </head>
 <body>
-
-<div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h5>Project Review app</h3>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><strong>AwwardsClone</strong></a>
             </div>
-            <ul class="list-unstyled components">
-                <li>
-                   
-
-                        <form action="{% url 'search' %}" method="get">
-
-                         <input name="q" type="text" placeholder="Search...">
-                         <button type="submit" class="btn btn-primary">Search</button>
-                        </form>
-             </li>
-                
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'home' %}">Profile</a></li>
+                <li><a href="{% url 'upload'%}">Upload Photo</a></li>
             </ul>
-            
-
-            <ul class="list-unstyled components" style="color: aliceblue;">
-                {% if user.is_authenticated %}
-                <p><a href="{% url 'logout'%}">Logout</a></p>
-                {% endif %}
-                <li class="active">
-                    <a href="{% url 'home'%}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Profile</a>
-                    
-                </li>
-                <li>
-                    <a href="{% url 'project-list' %}">Projects</a>
-                </li>
-                <li>
-                    <a href="{% url 'create'%}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Create Project</a>
-                </li>
-                <li>
-                    <a href="#">Update Project</a>
-                </li>
-                <li>
-                    <a href="#">Delete Project</a>
-                </li>
-                 
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>Hello {{ user }} !!</a></li>
+                <li><img src="#" width="50" height="50"></li>
+                <li><a href="{% url 'logout'%}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
-
-            <ul class="list-unstyled CTAs">
-                
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul>
-            
-        </nav>
-        
-        <div id="content">
-
-
-        
-        {% block content %}
-       
-        <!-- Page Content  -->
-        
-        
-	    {% endblock %}
-
-
-
         </div>
+    </nav>
+    {%else%}
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#"><strong>AwwardsClone</strong></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'register'%}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
         </div>
+    </nav>
+    </nav>
+    </div>
+    {% endif %}
+    {% block content %}
+    
+    {% endblock %}
 </body>
-
-
 </html>
-

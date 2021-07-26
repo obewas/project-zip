@@ -2,23 +2,21 @@
 {% load static %}
 
 {% block content %}
-<head>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	
 
 <!------ Include the above in your HEAD tag ---------->
-</head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
             <div class="container emp-profile" style="height: 100%; width:100%;">
 
 
                 <div class="row">
+                    <h4 style="text-align: center;">PROFILE INFORMATION</h4>
 
-                    <div class="col-md-4">
-
+                    <div class="card-group col-md-4">
+                    
                         <div class="profile-img">
-                            <img src="{{user.profile.picture.image.url}}" class="avatar" alt=""/>
+                            <img src="{{user.profile.picture.image.url}}" class="avatar" style="width:200px; height: 200px; border-radius: 50%;" alt=""/>
                             <p style="font-style: italic;">Profile photo</p>
                             
                         </div>
@@ -49,12 +47,12 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                            <p>WORK LINK</p>
-                            <a href=""></a><br/>
+                            <p>PROJECTS POSTED</p>
+                            <a href="{% url 'project-list' %}" class="btn btn-outline-success">Projects Posted</a><br/>
                             <a href=""></a><br/>
                             <a href=""></a>
-                            <p>SKILLS</p>
-                            <a href=""></a><br/>
+                            <p>CONTACT DETAILS</p>
+                            <p>Phone: {{user.profile.contact}}</p>
                             <a href=""></a><br/>
                             <a href=""></a><br/>
                             <a href=""></a><br/>
